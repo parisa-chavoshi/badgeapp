@@ -1,0 +1,16 @@
+.badge_buttons {
+  height: 42px;
+}
+
+.badge_issue_button {
+  filter: brightness(30%);
+}
+
+.owned_badge {
+  pointer-events: none;
+}
+
+.description {
+  font-size: 12px;
+  width: 280px
+}

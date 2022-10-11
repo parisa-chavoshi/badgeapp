@@ -1,0 +1,42 @@
+<table>
+  <tbody>
+    <% @users.each do |u| %>
+      <tr>
+        <td>
+          <ul style="list-style: none;">
+            <li><%= u.thumbnail ? image_tag(u.thumbnail, size: "62") : nil %></li>      
+            <li><%=  u.name %></li>  
+            <li><p class="description"><%=  u.description %></p></li>
+          </ul>
+        </td>
+        <td>
+          <table>
+            <tbody>
+              <tr>
+                <% @badge_templates.each do |bt| %>
+                <td>
+                  <figure>
+                    <%= form_with url: badges_path do |form| %>
+                      <%= hidden_field_tag "badge[recipient_email]", u.recipient_email %>
+                      <%= hidden_field_tag "badge[suppress_badge_notification_email]", true %>
+                      <%= hidden_field_tag "badge[issued_to_first_name]", u.name %>
+                      <%= hidden_field_tag "badge[issued_to_last_name]", u.user_org %>
+                      <%= hidden_field_tag "badge[badge_template_id]", bt.external_id %>
+                      <%= hidden_field_tag "badge[issued_at]", Time.now %>
+                      <%= hidden_field_tag "badge[issuer_earner_id]", u.external_id %>
+                      <%= image_submit_tag(bt.image_url, class: "badge_buttons #{u.owns_badge_template?(bt.external_id) ? 'owned_badge' : 'badge_issue_button'}")%>
+                    <% end %>
+                    <figcaption style="font-size:12px;">
+                      <%= bt.name %>
+                    </figcaption>
+                  </figure>
+                </td>
+                <% end %>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
