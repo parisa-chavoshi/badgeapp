@@ -10,7 +10,7 @@ class BadgesController < ApplicationController
   def post_api_call
     credly_auth_token = ENV['credly_auth_token']+":"
     auth_info = 'Basic ' + Base64.encode64( credly_auth_token ).chomp
-    debugger
+
     response = RestClient.post 'https://sandbox-api.credly.com/v1/organizations/cd79a0b5-2c57-421b-96c2-0979254afdb5/badges', badge_params.to_json, {:content_type => :json, :accept => :json, :Authorization => auth_info}
     JSON.parse(response)["data"] 
   end

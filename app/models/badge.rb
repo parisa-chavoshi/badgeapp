@@ -4,4 +4,5 @@ class Badge < ApplicationRecord
 
   validates :user_id, presence: true
   validates :badge_template_id, presence: true
+  validates_uniqueness_of :badge_template_id, scope: [:user_id]
 end
